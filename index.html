@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>What colour is it?</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <style>
+      body {
+        color: #fff;
+        font-family: 'Open Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      #container {
+        position: absolute;
+        bottom: 0;
+        height: 65%;
+        width: 100%;
+      }
+      #time {
+        font-size: 6vw;
+      }
+      #color {
+        font-size: 2vw;
+        margin-top: 6vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="time">time</div>
+      <div id="color"></div>
+    </div>
+
+    <script>
+      var timeDiv = document.getElementById('time');
+      var colorDiv = document.getElementById('color');
+
+      function padInt(n) {
+        return (n < 10 ? '0' : '') + n;
+      }
+
+      function update() {
+        var now = new Date();
+        var h = padInt(now.getHours());
+        var m = padInt(now.getMinutes());
+        var s = padInt(now.getSeconds());
+        timeDiv.textContent = h + ' : ' + m + ' : ' + s;
+        var color = '#' + h + m + s;
+        colorDiv.textContent = color;
+        document.body.style.backgroundColor = color;
+      }
+
+      update();
+      setInterval(update, 1000);
+    </script>
+  </body>
+</html>
