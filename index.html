@@ -34,20 +34,37 @@
     </div>
 
     <script>
-      var timeDiv = document.getElementById('time');
-      var colorDiv = document.getElementById('color');
+      const COLOUR_BOUND = 0xffffff + 1;
+      const timeDiv = document.getElementById('time');
+      const colorDiv = document.getElementById('color');
+
+      var useDaily = true;
 
       function padInt(n) {
         return (n < 10 ? '0' : '') + n;
       }
 
+      function dateToColourTimestamp(date) {
+        const seconds = Math.floor(date.getTime() / 1000);
+        return '#' + (seconds % COLOUR_BOUND).toString(16);
+      }
+
+      function dateToColourDaily(date) {
+        const seconds = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+        var hex = seconds.toString(16);
+        while (hex.length < 6) {
+          hex = '0' + hex;
+        }
+        return '#' + hex;
+      }
+
       function update() {
-        var now = new Date();
-        var h = padInt(now.getHours());
-        var m = padInt(now.getMinutes());
-        var s = padInt(now.getSeconds());
+        const now = new Date();
+        const color = useDaily ? dateToColourDaily(now) : dateToColourTimestamp(now);
+        const h = padInt(now.getHours());
+        const m = padInt(now.getMinutes());
+        const s = padInt(now.getSeconds());
         timeDiv.textContent = h + ' : ' + m + ' : ' + s;
-        var color = '#' + h + m + s;
         colorDiv.textContent = color;
         document.body.style.backgroundColor = color;
       }
